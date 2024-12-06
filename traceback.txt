@@ -1,0 +1,26 @@
+﻿I'm sorry, but an uncaught exception occurred.
+
+While running game code:
+FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\shokh\\C Projects\\ChristmasNovel\\ChristmasNovel\\game\\saves\\persistent.1733512547.tmp'
+
+-- Full Traceback ------------------------------------------------------------
+
+Full traceback:
+  File "C:\Users\shokh\Downloads\renpy-8.3.3-sdk\renpy\bootstrap.py", line 359, in bootstrap
+    renpy.main.main()
+  File "C:\Users\shokh\Downloads\renpy-8.3.3-sdk\renpy\main.py", line 666, in main
+    renpy.persistent.update(True)
+  File "C:\Users\shokh\Downloads\renpy-8.3.3-sdk\renpy\persistent.py", line 434, in update
+    save()
+  File "C:\Users\shokh\Downloads\renpy-8.3.3-sdk\renpy\persistent.py", line 456, in save
+    renpy.loadsave.location.save_persistent(compressed)
+  File "C:\Users\shokh\Downloads\renpy-8.3.3-sdk\renpy\savelocation.py", line 622, in save_persistent
+    l.save_persistent(data)
+  File "C:\Users\shokh\Downloads\renpy-8.3.3-sdk\renpy\savelocation.py", line 426, in save_persistent
+    with open(fn_tmp, "wb") as f:
+FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\shokh\\C Projects\\ChristmasNovel\\ChristmasNovel\\game\\saves\\persistent.1733512547.tmp'
+
+Windows-10-10.0.19045 AMD64
+Ren'Py 8.3.3.24111502
+ChristmasNovel 1.0
+Fri Dec  6 20:52:51 2024
