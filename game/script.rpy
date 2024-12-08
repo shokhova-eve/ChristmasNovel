@@ -61,6 +61,9 @@ init python:
         renpy.show_screen("point_indicator", text="{}'s approval + {}".format(character.given, x))
         renpy.pause(2)  # Allows player to see the message
 
+transform scale(ratio):
+    zoom ratio
+
 # The game starts here.
 label start:
 
@@ -74,26 +77,26 @@ label start:
     # replace it by adding a file named "eileen happy.png" to the images
     # directory.
 
-    show nissa worried
+    show nissa worried at scale(1.2)
     # These display lines of dialogue.
 
     n "Oh, hi! My friends are coming... You're probably be better off..."
 
-    hide nissa
+    show nissa shy
 
-    show ania unhappy at left
+    show ania unhappy at scale(2)
 
     a "Hi. Traffic was horrendous."
 
-    show rima happy at right
+    show rima happy at right, scale(2)
     
     r "Hi there. It is nice to see a new face"
 
-    show juls playful at right
+    show juls playful at right, scale(2)
 
     j "It is nice to see a face that is not prepared for what's coming!"
 
-    show eve happy at left
+    show eve happy at left, scale(2)
 
     e "What is coming?"
 
