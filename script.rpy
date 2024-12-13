@@ -6,7 +6,7 @@
         
 define config.name = _('The Best Gift')
 
-init -4 python:
+init python:
     # Create the 'characters' class for tracking character attributes
     class Characters(object): 
         _instances = set()
@@ -55,25 +55,14 @@ transform fade_out:
     on hide:
         alpha 0.0
 
-label approval_check(character, x):
-    if character == "Nissa":
-        $Nissa.like += x
-        show screen point_indicator("Nissa's approval + [x]")
-    elif character == "Jane":
-        $Jane.like += x
-        show screen point_indicator("Jane's approval + [x]")
-    elif character == "Ania":
-        $Ania.like += x
-        show screen point_indicator("Ania's approval + [x]")
-    elif character == "Rima":
-        $Rima.like += x
-        show screen point_indicator("Rima's approval + [x]")
-    elif character == "Juls":
-        $Juls.like += x
-        show screen point_indicator("Juls's approval + [x]")
-    
-    $renpy.pause(2)  # Затримка для того, щоб гравець побачив повідомлення
-    return
+init python:
+    def approval_check(character, x):
+        character.like += x
+        renpy.show_screen("point_indicator", text="{}'s approval + {}".format(character.given, x))
+        renpy.pause(2)  # Allows player to see the message
+
+transform scale(ratio):
+    zoom ratio
 
 # The game starts here.
 label start:
@@ -88,20 +77,25 @@ label start:
     # replace it by adding a file named "eileen happy.png" to the images
     # directory.
 
-    show nissa worried
+    show nissa worried at scale(1.5), Position(xalign=0.35, yalign=1.2), zorder 0
     # These display lines of dialogue.
 
-    n "Oh, hi! My friends are coming... You're probably be better off..."
+    n "Oh, hi! My friends are coming... You're probably better talk to them..."
 
-    hide nissa
 
-    show ania unhappy
+    show ania unhappy at scale(1.5), Position(xalign=0.2, yalign=1.2)
 
     a "Hi. Traffic was horrendous."
-    
+
+    show rima happy flipped at scale(1.5), Position(xalign=0.7, yalign=1.2)
+    show luna at scale(0.9), Position(xalign=0.65, yalign=1.0), zorder 1
     r "Hi there. It is nice to see a new face"
 
+    show juls playful flipped at scale(1.5), Position(xalign=0.9, yalign=1.2)
+
     j "It is nice to see a face that is not prepared for what's coming!"
+
+    show eve happy at scale(1.5), Position(xalign=0.1, yalign=1.2)
 
     e "What is coming?"
 
@@ -109,31 +103,32 @@ label start:
     
     a "Be grateful you are not on a car, or you wouldn't have such a pleasant visit"
 
-    menu:   
-        "replay to Ania":
-            u "I am a driver myself by the way"
-            show screen point_indicator("Ania + 1")
-            $renpy.pause(2)
-        
-        "replay to Juls":
+
+    menu:
+        "I am a driver myself, by the way.":
+            u "I am a driver myself, by the way."
+            $ approval_check(Ania, 1)
+
+        "And Juls, what is coming actually?":
             u "And Juls, what is coming actually?"
-            $approval_check("Juls", 1)
+            $ approval_check(Juls, 1)
 
-        "replay to Rima":
-            u "It is nice to see new faces too, Rima"
-            $approval_check("Rima", 1)
+        "It is nice to see new faces too, Rima.":
+            u "It is nice to see new faces too, Rima."
+            $ approval_check(Rima, 1)
 
-        "replay to Jane":    
-            u "What are you reading? I breezed through a novel in a train too!"
-            $approval_check("Jane", 1)
-        
-        "replay to Nissa":    
-            u "You have nice hair color, Nissa. I plan to color pink next time!"
-            $approval_check("Nissa", 1)
+        "What are you reading? I breezed through a novel on the train too!":
+            u "What are you reading? I breezed through a novel on the train too!"
+            $ approval_check(Jane, 1)
+
+        "You have nice hair color, Nissa. I plan to color mine pink next time!":
+            u "You have nice hair color, Nissa. I plan to color mine pink next time!"
+            $ approval_check(Nissa, 1)
+
 
     u "Actually, Leuten, I need a favor."
-    u "There is a person here in Stuttgart. They moved recently. We were in one college, and she switched the major."
-    u "However, she doesn't know that I moved too. I've never been rave enough to be proper friends with her, but I hope that this Christmas we can connect."
+    u "There is a person here in Stuttgart. They moved recently. We were in one college, and they switched the major."
+    u "However, she doesn't know that I moved too. I've never been brave enough to be proper friends with her, but I hope that this Christmas we can connect."
     u "So I need a really good gift. Could you help me?"
 
     r "Oh, that is so sweet. The best you can do is to craft something from your heart."
